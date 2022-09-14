@@ -16,6 +16,7 @@ spec:
       containers:
       - name: nginx
         image: nginx
+        imagePullPolicy: Never
         volumeMounts:
         - name: nfs-vol
           mountPath: /usr/share/nginx/html
