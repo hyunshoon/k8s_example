@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: test
+spec:
+  selector:
+    matchLabels:
+      name: test
+  template:
+    metadata:
+      labels:
+        name: test
+    spec:
+      tolerations: #taints가 무시되고 아래에 적용한 부분에 따라 포드가 배포된다. 즉, 마스터도 배포
+      - key: node-role.kubernetes.io/master
+        effect: NoSchedule
+      containers:
+      - name: test
+        image: busybox
+        args: ["tail", "-f", "/dev/null"] # 포드가 중지되지 않도록하기 위한 설정
+        resources:
+          limits:
+            cpu: 100m
+            memory: 200Mi
